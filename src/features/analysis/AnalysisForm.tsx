@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Spinner } from '../../components/common/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { simulateFetchAnalysis } from './analysisSlice';
-import type { RootState, AppDispatch } from '../../store/store';
+import { Spinner } from '../../components/common/Spinner';
+import type { AppDispatch, RootState } from '../../store/store';
+
+// Import the real thunk, not the simulation!
+import { fetchAnalysis } from './analysisSlice';
 
 export const AnalysisForm = () => {
   const [text, setText] = useState('');
@@ -11,16 +13,17 @@ export const AnalysisForm = () => {
   const isLoading = status === 'loading';
 
   const handleAnalyze = () => {
-    if (!text.trim()) return; // Prevent dispatching for empty text
-    dispatch(simulateFetchAnalysis());
+    // Prevent dispatching for empty/whitespace-only text
+    if (!text.trim()) {
+      return;
+    }
+    // Dispatch the real thunk with the text from the component's state
+    dispatch(fetchAnalysis(text));
   };
 
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-      <label
-        htmlFor="analysis-textarea"
-        className="block text-xl font-semibold mb-4"
-      >
+      <label htmlFor="analysis-textarea" className="block text-xl font-semibold mb-4">
         Enter text to analyze
       </label>
       <textarea
@@ -32,9 +35,10 @@ export const AnalysisForm = () => {
         disabled={isLoading}
       />
       <button
-        onClick={handleAnalyze} // <-- Add onClick handler
+        onClick={handleAnalyze}
         className="mt-4 w-full h-12 flex items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 disabled:bg-gray-600 disabled:cursor-not-allowed"
-        disabled={isLoading}
+        // Also disable button if the textarea is empty
+        disabled={isLoading || !text.trim()}
       >
         {isLoading ? <Spinner /> : 'Analyze'}
       </button>
