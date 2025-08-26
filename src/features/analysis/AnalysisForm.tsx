@@ -5,6 +5,8 @@ import type { AppDispatch, RootState } from '../../store/store';
 
 // Import the real thunk, not the simulation!
 import { fetchAnalysis } from './analysisSlice';
+// 1. Import the fetchHistory action
+import { fetchHistory } from '../history/historySlice';
 
 export const AnalysisForm = () => {
   const [text, setText] = useState('');
@@ -12,13 +14,19 @@ export const AnalysisForm = () => {
   const { status } = useSelector((state: RootState) => state.analysis);
   const isLoading = status === 'loading';
 
-  const handleAnalyze = () => {
-    // Prevent dispatching for empty/whitespace-only text
+  // 2. Make the handler async and await the result
+  const handleAnalyze = async () => {
     if (!text.trim()) {
       return;
     }
-    // Dispatch the real thunk with the text from the component's state
-    dispatch(fetchAnalysis(text));
+    // `dispatch` returns a promise when using async thunks
+    const resultAction = await dispatch(fetchAnalysis(text));
+
+    // 3. After the analysis is complete, refresh the history
+    // We can check if the thunk was fulfilled to avoid refreshing on error
+    if (fetchAnalysis.fulfilled.match(resultAction)) {
+      dispatch(fetchHistory());
+    }
   };
 
   return (

@@ -68,6 +68,12 @@ const analysisSlice = createSlice({
       })
       .addCase(fetchAnalysis.fulfilled, (state, action: PayloadAction<AnalysisResults>) => {
         state.status = 'succeeded';
+
+        // --- ADD THIS LINE FOR DEBUGGING ---
+        console.log("--- DATA RECEIVED FROM BACKEND ---");
+        console.log(action.payload);
+        console.log("----------------------------------");
+
         state.results = action.payload;
       })
       .addCase(fetchAnalysis.rejected, (state, action) => {
