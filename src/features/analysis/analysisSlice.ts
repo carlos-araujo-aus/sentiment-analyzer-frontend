@@ -28,21 +28,25 @@ const initialState: AnalysisState = {
 // It will automatically dispatch actions for pending, fulfilled, and rejected states.
 export const fetchAnalysis = createAsyncThunk(
   'analysis/fetchAnalysis', // This string is used as the prefix for the generated action types
-  async (textToAnalyze: string, { rejectWithValue }) => {
+  // The thunk now expects an object with text and captchaToken
+  async (
+    { text, captchaToken }: { text: string; captchaToken: string }, // <-- 1. Update the argument signature
+    { rejectWithValue }
+  ) => {
     try {
-      // Use our apiClient to make the POST request to the /analyze endpoint
-      const response = await apiClient.post<AnalysisResults>('/analyze', { text: textToAnalyze });
-      // The returned value will become the payload of the `fulfilled` action
+      // Pass the entire object as the payload for the POST request
+      const response = await apiClient.post<AnalysisResults>('/analyze', {
+        text,
+        captchaToken, // <-- 2. Send the token to the backend
+      });
       return response.data;
     } catch (err: any) {
-      // Use `rejectWithValue` to handle errors in a standardized way.
-      // It ensures the payload of the `rejected` action is consistent.
       if (err.response && err.response.data && err.response.data.error) {
-        // If the backend sent a specific error message, pass it along
         return rejectWithValue(err.response.data.error);
       }
-      // Otherwise, return a generic error message
-      return rejectWithValue(err.message || 'An unexpected network error occurred');
+      return rejectWithValue(
+        err.message || 'An unexpected network error occurred'
+      );
     }
   }
 );
@@ -66,19 +70,15 @@ const analysisSlice = createSlice({
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(fetchAnalysis.fulfilled, (state, action: PayloadAction<AnalysisResults>) => {
-        state.status = 'succeeded';
-
-        // --- ADD THIS LINE FOR DEBUGGING ---
-        console.log("--- DATA RECEIVED FROM BACKEND ---");
-        console.log(action.payload);
-        console.log("----------------------------------");
-
-        state.results = action.payload;
-      })
+      .addCase(
+        fetchAnalysis.fulfilled,
+        (state, action: PayloadAction<AnalysisResults>) => {
+          state.status = 'succeeded';
+          state.results = action.payload;
+        }
+      )
       .addCase(fetchAnalysis.rejected, (state, action) => {
         state.status = 'failed';
-        // The payload comes from what we passed to `rejectWithValue`
         state.error = action.payload as string;
       });
   },

@@ -16,6 +16,14 @@ export const HistoryList = () => {
     }
   }, [status, dispatch]);
 
+  const formatLocalDate = (dateString: string) => {
+    // Create a new Date object from the UTC string provided by the API
+    const date = new Date(dateString);
+    // Use toLocaleString() to format the date according to the user's
+    // browser settings (language and timezone).
+    return date.toLocaleString();
+  };
+
   // Conditional rendering based on the request status
   let content;
 
@@ -41,7 +49,8 @@ export const HistoryList = () => {
                   {item.sentiment_label.charAt(0).toUpperCase() + item.sentiment_label.slice(1)}
                 </span>
                 <span className="text-xs text-gray-500">
-                  {new Date(item.created_at).toLocaleString()}
+                  {formatLocalDate(item.created_at)}
+                  {/* {new Date(item.created_at).toLocaleString()} */}
                 </span>
               </div>
             </li>
