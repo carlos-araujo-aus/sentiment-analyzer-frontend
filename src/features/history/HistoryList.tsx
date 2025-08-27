@@ -8,13 +8,12 @@ export const HistoryList = () => {
   const dispatch: AppDispatch = useDispatch();
   const { items, status, error } = useSelector((state: RootState) => state.history);
 
-  // Use the useEffect hook to fetch history when the component mounts
   useEffect(() => {
-    // We only want to fetch if the status is 'idle' to prevent re-fetching on every re-render
-    if (status === 'idle') {
-      dispatch(fetchHistory());
-    }
-  }, [status, dispatch]);
+    // We remove the status === 'idle' check.
+    // The component will now only be rendered when the session is ready,
+    // so it's safe to fetch the history right away on mount.
+    dispatch(fetchHistory());
+  }, [dispatch]); // The dependency array now only contains dispatch
 
   const formatLocalDate = (dateString: string) => {
     // Create a new Date object from the UTC string provided by the API
