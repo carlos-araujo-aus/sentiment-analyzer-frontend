@@ -3,6 +3,7 @@ import { AnalysisForm } from './features/analysis/AnalysisForm';
 import { ResultsDisplay } from './features/analysis/ResultsDisplay';
 // 1. Import the new HistoryList component
 import { HistoryList } from './features/history/HistoryList';
+import { Footer } from './components/common/Footer'; // <-- 1. Import the new component
 
 function App() {
   return (
@@ -21,12 +22,11 @@ function App() {
         <div className="mt-8">
           <ResultsDisplay />
         </div>
+        <HistoryList />
       </main>
 
-      {/* 2. Add the HistoryList component to the main layout */}
-      <footer className="w-full mt-auto flex justify-center">
-        <HistoryList />
-      </footer>
+      {/* 2. Add the Footer component at the end of the main layout */}
+      <Footer />
     </div>
   );
 }
