@@ -2,7 +2,7 @@
 
 This is the frontend for the AI Sentiment Analyzer project, a modern, responsive, and interactive Single-Page Application (SPA) built with React, TypeScript, and Vite. It provides the user interface for text analysis and data visualization.
 
-**➡️ Live Demo: [YOUR_LIVE_DEMO_URL_HERE] ⬅️**
+**➡️ Live Demo: https://sentiment-analyzer-app-qry4q.ondigitalocean.app/ ⬅️**
 
 ## ✨ Core Features
 
@@ -12,7 +12,7 @@ This is the frontend for the AI Sentiment Analyzer project, a modern, responsive
     -   An interactive **bar chart** (using Chart.js) provides a detailed breakdown of the detected emotions.
     -   Relevant keywords are rendered as styled tags for quick insights.
 -   **Robust State Management**: Utilizes **Redux Toolkit** to predictably manage the application's global state, including the complete lifecycle of API requests (`loading`, `succeeded`, `failed`), providing a smooth and responsive user experience.
--   **Private Analysis History**: Displays a list of the user's recent analyses. This feature is powered by a backend **anonymous session system**, ensuring that each user's history is private and tied to their browser session.
+-   **Private Analysis History**: Displays a list of the user's recent analyses. This feature is powered by a backend **anonymous session system**, ensuring that each user's history is private and tied to their browser session tied to their browser session via localStorage.
 -   **Modern & Responsive UI**: Designed with a **dark theme** and built with **Tailwind CSS**, the application is fully responsive and provides a polished user experience on desktop, tablet, and mobile devices.
 -   **Professional UX**: Includes loading indicators, clear error messages, and an automatic history refresh after a successful analysis for a seamless workflow.
 
@@ -29,6 +29,25 @@ This is the frontend for the AI Sentiment Analyzer project, a modern, responsive
 | **Axios**              | HTTP client for making requests to the backend API.  |
 | **react-google-recaptcha** | For integrating the reCAPTCHA v2 widget.     |
 
+## 📂 Project Structure
+
+The project follows a feature-based architecture to keep the codebase organized, scalable, and easy to maintain.
+
+```
+src/
+├── assets/         # Static assets like images and fonts
+├── components/     # Reusable, "dumb" UI components (Buttons, Spinners, etc.)
+│   ├── common/
+│   └── layout/
+├── features/       # "Smart" components grouped by application feature
+│   ├── analysis/   # All logic for the sentiment analysis feature
+│   └── history/    # All logic for the analysis history feature
+├── hooks/          # Custom React hooks
+├── services/       # Modules for external communication (apiClient, sessionManager)
+├── store/          # Redux Toolkit store configuration
+└── utils/          # Utility functions
+```
+
 ## 🚀 Getting Started
 
 Follow these steps to run the frontend on your local machine.
@@ -36,13 +55,13 @@ Follow these steps to run the frontend on your local machine.
 ### Prerequisites
 
 -   Node.js (v18 or higher) and npm.
--   The [backend server](https://github.com/YOUR_USERNAME/sentiment-analyzer-backend) must be running locally.
+-   The [backend server](https://github.com/carlos-araujo-aus/sentiment-analyzer-backend) must be running locally.
 
 ### Installation & Setup
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/sentiment-analyzer-frontend.git
+    git clone https://github.com/carlos-araujo-aus/sentiment-analyzer-frontend.git
     cd sentiment-analyzer-frontend
     ```
 
