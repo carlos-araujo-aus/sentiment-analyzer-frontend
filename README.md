@@ -4,6 +4,20 @@ This is the frontend for the AI Sentiment Analyzer project, a modern, responsive
 
 **➡️ Live Demo: https://sentiment-analyzer-app-qry4q.ondigitalocean.app/ ⬅️**
 
+## 📸 Screenshots
+
+*A quick look at the application's interface and features.*
+
+## 📸 Screenshots
+
+*A quick look at the application's interface and features.*
+
+| Main Analysis View | Results & Emotion Chart | Analysis History |
+| :---: | :---: | :---: |
+| ![Main UI](https://raw.githubusercontent.com/carlos-araujo-aus/sentiment-analyzer-frontend/refs/heads/main/docs/screenshots/2a.png) | ![Results UI](https://raw.githubusercontent.com/carlos-araujo-aus/sentiment-analyzer-frontend/refs/heads/main/docs/screenshots/2b.png) | ![History UI](https://raw.githubusercontent.com/carlos-araujo-aus/sentiment-analyzer-frontend/refs/heads/main/docs/screenshots/2c.png) |
+
+
+
 ## ✨ Core Features
 
 -   **Interactive Analysis Form**: A clean and simple `textarea` for users to input text, secured by a Google **reCAPTCHA v2** "I'm not a robot" widget to prevent automated abuse.
